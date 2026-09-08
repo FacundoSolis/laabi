@@ -435,7 +435,9 @@ input[type="date"]::-webkit-calendar-picker-indicator { opacity: .45; cursor: po
   to   { opacity: 1; clip-path: inset(0 -4% 0 0); }
 }
 
+/* Solo opacidad: si la animación fijara transform, con fill-mode "both"
+   se quedaría mandando y el hover del botón no podría escalarlo. */
 @keyframes fabIn {
-  from { opacity: 0; transform: translateY(14px) scale(.94); }
-  to   { opacity: 1; transform: none; }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }

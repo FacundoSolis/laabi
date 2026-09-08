@@ -3,10 +3,10 @@ import { site, type Apartment } from "@/lib/site";
 /* ------------------------------------------------------------
    Botón flotante de WhatsApp, abajo a la derecha.
 
-   Está desde el primer momento, sin esperar a que se baje. Como no
-   necesita nada del navegador, se renderiza en el servidor y sale ya
-   en el HTML: se ve incluso antes de que la página termine de
-   hidratar.
+   Solo el icono, en círculo. Está desde el primer momento, sin esperar
+   a que se baje. Como no necesita nada del navegador, se renderiza en
+   el servidor y sale ya en el HTML: se ve incluso antes de que la
+   página termine de hidratar.
 
    z-index 35 a propósito: por encima del contenido, pero por debajo
    del menú móvil (40), de la cabecera (50) y del visor de fotos (80),
@@ -23,13 +23,9 @@ export function WhatsAppFab({ apt }: { apt: Apartment }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Escribir por WhatsApp sobre ${apt.name}`}
-      className="wa-fab group fixed bottom-6 right-6 z-[35] flex items-center gap-0 overflow-hidden rounded-full bg-whatsapp py-4 pl-4 pr-4 text-white shadow-[0_14px_40px_-12px_rgba(18,64,38,0.6)] transition-[background-color,gap,padding] duration-500 hover:bg-whatsapp-deep md:bottom-8 md:right-8 md:hover:gap-3 md:hover:pr-7"
+      className="wa-fab fixed bottom-6 right-6 z-[35] flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-white shadow-[0_14px_40px_-12px_rgba(18,64,38,0.6)] transition-[background-color,scale] duration-500 hover:scale-105 hover:bg-whatsapp-deep md:bottom-8 md:right-8 md:h-16 md:w-16"
     >
-      <WhatsAppGlyph className="h-7 w-7 shrink-0" />
-      {/* La etiqueta solo se despliega en escritorio, al pasar por encima */}
-      <span className="hidden max-w-0 whitespace-nowrap text-[0.78rem] font-medium tracking-[0.08em] uppercase transition-[max-width] duration-500 group-hover:max-w-[16rem] md:block">
-        Escríbenos
-      </span>
+      <WhatsAppGlyph className="h-7 w-7 md:h-8 md:w-8" />
     </a>
   );
 }
