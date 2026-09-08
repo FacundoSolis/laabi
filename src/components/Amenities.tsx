@@ -1,7 +1,7 @@
-import { amenities } from "@/lib/site";
+import type { Apartment } from "@/lib/site";
 import { Reveal } from "./Reveal";
 
-export function Amenities() {
+export function Amenities({ apt }: { apt: Apartment }) {
   return (
     <section id="equipamiento" className="py-24 md:py-32">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
@@ -27,7 +27,7 @@ export function Amenities() {
           </div>
 
           <div className="grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:col-span-8">
-            {amenities.map((group, gi) => (
+            {apt.amenities.map((group, gi) => (
               <Reveal key={group.group} delay={gi * 90}>
                 <div className="border-t border-ink/12 pt-6">
                   <h3 className="eyebrow mb-6 flex items-baseline gap-3 text-ink">

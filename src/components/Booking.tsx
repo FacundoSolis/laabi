@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { site } from "@/lib/site";
+import { site, type Apartment } from "@/lib/site";
 import {
   addDays,
   formatDateLong,
@@ -13,8 +13,6 @@ import {
 } from "@/lib/pricing";
 import { Reveal } from "./Reveal";
 import { SlatImage } from "./SlatImage";
-
-const P = site.pricing;
 
 type Form = {
   checkIn: string;
@@ -36,13 +34,15 @@ const initial: Form = {
   notes: "",
 };
 
-function reference(): string {
+function reference(prefix: string): string {
   const n = Math.floor(1000 + Math.random() * 9000);
   const y = String(new Date().getFullYear()).slice(2);
-  return `LA-${y}${n}`;
+  return `${prefix}-${y}${n}`;
 }
 
-export function Booking() {
+export function Booking({ apt }: { apt: Apartment }) {
+  const P = apt.pricing;
+  const photo = apt.photos[apt.photos.length - 1];
   const [form, setForm] = useState<Form>(initial);
   const [errors, setErrors] = useState<Partial<Record<keyof Form, string>>>({});
   const [sent, setSent] = useState<{ ref: string; text: string } | null>(null);
@@ -53,8 +53,8 @@ export function Booking() {
     : toISO(addDays(today(), P.minNights));
 
   const q = useMemo(
-    () => quote(form.checkIn, form.checkOut, form.guests),
-    [form.checkIn, form.checkOut, form.guests],
+    () => quote(P, form.checkIn, form.checkOut, form.guests),
+    [P, form.checkIn, form.checkOut, form.guests],
   );
 
   const set = <K extends keyof Form>(key: K, value: Form[K]) => {
@@ -80,7 +80,9 @@ export function Booking() {
     if (!q) {
       if (form.checkIn && form.checkOut) e.checkOut = "La salida debe ser posterior a la entrada";
     } else if (q.nights < P.minNights) {
-      e.checkOut = `La estancia mínima es de ${P.minNights} noches`;
+      e.checkOut = `La estancia mínima es de ${P.minNights} ${
+        P.minNights === 1 ? "noche" : "noches"
+      }`;
     }
     if (!form.name.trim()) e.name = "Necesitamos tu nombre";
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email)) e.email = "Revisa el correo";
@@ -93,9 +95,9 @@ export function Booking() {
     ev.preventDefault();
     if (!validate() || !q) return;
 
-    const ref = reference();
+    const ref = reference(apt.ref);
     const text = [
-      `Solicitud de reserva ${ref} — ${site.name}`,
+      `Solicitud de reserva ${ref} — ${apt.name}`,
       "",
       `Entrada: ${formatDateLong(form.checkIn)} (desde las ${site.checkIn})`,
       `Salida: ${formatDateLong(form.checkOut)} (hasta las ${site.checkOut})`,
@@ -152,8 +154,8 @@ export function Booking() {
             <Reveal delay={200}>
               <div className="mt-10 hidden lg:block">
                 <SlatImage
-                  src="/img/dormitorio-detalle.jpg"
-                  alt="Detalle del dormitorio con lámpara de luz cálida"
+                  src={photo.src}
+                  alt={photo.alt}
                   className="aspect-[4/5] w-full"
                   sizes="30vw"
                 />
@@ -227,7 +229,7 @@ export function Booking() {
                           onChange={(e) => set("checkOut", e.target.value)}
                         />
                       </Field>
-                      <Field label="Huéspedes">
+                      <Field label={`Huéspedes (máx. ${P.maxGuests})`}>
                         <select
                           className="field"
                           value={form.guests}
@@ -276,7 +278,8 @@ export function Booking() {
                       ) : (
                         <p className="text-[0.9rem] text-ink-soft">
                           Selecciona tus fechas y te calculamos el precio al
-                          instante. Estancia mínima de {P.minNights} noches.
+                          instante. Estancia mínima de {P.minNights}{" "}
+                          {P.minNights === 1 ? "noche" : "noches"}.
                         </p>
                       )}
                     </div>
@@ -328,8 +331,8 @@ export function Booking() {
                         Solicitar reserva
                       </button>
                       <p className="max-w-xs text-[0.78rem] leading-relaxed text-ink-soft">
-                        Sin pago online. Te respondemos con la disponibilidad y las
-                        instrucciones.
+                        Sin pago online y sin fianza. Te respondemos con la
+                        disponibilidad y las instrucciones.
                       </p>
                     </div>
                   </form>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type ElementType, type ReactNode } from "react";
+import { useMotionVariant } from "./Motion";
 
 /* Observador compartido: un único IntersectionObserver para toda la página. */
 let observer: IntersectionObserver | null = null;
@@ -48,14 +49,21 @@ export function Reveal({
   className?: string;
 }) {
   const ref = useReveal<HTMLDivElement>();
+  const variant = useMotionVariant();
+
   return (
     <Tag
       ref={ref}
       data-reveal=""
+      data-motion={variant}
       className={className}
       style={{ "--reveal-delay": `${delay}ms` } as React.CSSProperties}
     >
-      {children}
+      {/* En la variante "veil" el telón se aplica a un envoltorio interior,
+          nunca al elemento observado: un clip-path que lo recorta a altura
+          cero haría que el IntersectionObserver no lo viera nunca y el
+          bloque no llegaría a aparecer jamás. */}
+      {variant === "veil" ? <span className="veil-inner">{children}</span> : children}
     </Tag>
   );
 }

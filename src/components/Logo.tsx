@@ -66,11 +66,13 @@ export function Logo({
   markClassName = "h-9 w-9",
   animate = false,
   stacked = false,
+  label = "LA ABI",
 }: {
   className?: string;
   markClassName?: string;
   animate?: boolean;
   stacked?: boolean;
+  label?: string;
 }) {
   return (
     <span
@@ -84,7 +86,7 @@ export function Logo({
           className="serif text-[1.35rem] font-normal tracking-[0.12em]"
           style={{ fontVariationSettings: '"SOFT" 30, "WONK" 1' }}
         >
-          LA ABI
+          {label}
         </span>
         <span className="eyebrow mt-[6px] text-[0.5rem] opacity-55">
           Salamanca

@@ -25,12 +25,13 @@ export const metadata: Metadata = {
     template: `%s · ${site.name}`,
   },
   description:
-    "Apartamento turístico reformado en el centro de Salamanca, a cinco minutos de la Plaza Mayor. Para cuatro personas, con cocina completa y check-in autónomo.",
+    "Dos apartamentos turísticos en el centro de Salamanca, en el mismo portal y en planta baja. Reservas directas, sin intermediarios.",
   keywords: [
     "apartamento turístico Salamanca",
     "alojamiento Salamanca centro",
     "La Abi",
-    "apartamento Plaza Mayor Salamanca",
+    "La Abi 1",
+    "estudio turístico Salamanca",
   ],
   openGraph: {
     type: "website",
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
     siteName: site.legalName,
     title: `${site.name} · Apartamentos turísticos en Salamanca`,
     description:
-      "Una casa con alma en el centro de Salamanca. Reservas directas, sin intermediarios.",
+      "Dos casas con alma en el centro de Salamanca. Reservas directas, sin intermediarios.",
   },
   robots: { index: true, follow: true },
 };
@@ -51,37 +52,9 @@ export const viewport: Viewport = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Apartment",
-    name: site.legalName,
-    description:
-      "Apartamento turístico reformado en el centro de Salamanca para cuatro personas.",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: site.city,
-      addressCountry: "ES",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: site.map.lat,
-      longitude: site.map.lng,
-    },
-    numberOfRooms: 1,
-    occupancy: { "@type": "QuantitativeValue", maxValue: site.pricing.maxGuests },
-    telephone: site.phone,
-    email: site.email,
-  };
-
   return (
     <html lang="es" className={`${fraunces.variable} ${inter.variable}`}>
-      <body className="grain antialiased">
-        {children}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      </body>
+      <body className="grain antialiased">{children}</body>
     </html>
   );
 }

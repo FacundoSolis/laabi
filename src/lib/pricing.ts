@@ -1,6 +1,4 @@
-import { site } from "./site";
-
-const P = site.pricing;
+import type { Pricing } from "./site";
 
 export type Quote = {
   nights: number;
@@ -47,13 +45,14 @@ function isHighSeason(d: Date): boolean {
   return false;
 }
 
-function nightPrice(d: Date): number {
+function nightPrice(d: Date, p: Pricing): number {
   const weekday = d.getDay(); // 0 domingo … 6 sábado
-  const base = weekday === 5 || weekday === 6 ? P.weekend : P.base;
-  return isHighSeason(d) ? base * P.highSeason : base;
+  const base = weekday === 5 || weekday === 6 ? p.weekend : p.base;
+  return isHighSeason(d) ? base * p.highSeason : base;
 }
 
 export function quote(
+  p: Pricing,
   checkIn: string,
   checkOut: string,
   guests: number,
@@ -66,18 +65,18 @@ export function quote(
   if (nights <= 0) return null;
 
   let nightsTotal = 0;
-  for (let i = 0; i < nights; i++) nightsTotal += nightPrice(addDays(a, i));
+  for (let i = 0; i < nights; i++) nightsTotal += nightPrice(addDays(a, i), p);
   nightsTotal = Math.round(nightsTotal);
 
-  const extra = Math.max(0, guests - (P.extraGuestFrom - 1));
-  const extraGuests = extra * P.extraGuestFee * nights;
-  const total = nightsTotal + extraGuests + P.cleaning;
+  const extra = Math.max(0, guests - (p.extraGuestFrom - 1));
+  const extraGuests = extra * p.extraGuestFee * nights;
+  const total = nightsTotal + extraGuests + p.cleaning;
 
   return {
     nights,
     nightsTotal,
     extraGuests,
-    cleaning: P.cleaning,
+    cleaning: p.cleaning,
     total,
     average: Math.round(nightsTotal / nights),
   };

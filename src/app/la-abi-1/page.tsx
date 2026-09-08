@@ -4,39 +4,39 @@ import { Booking } from "@/components/Booking";
 import { Cursor } from "@/components/Cursor";
 import { Faq } from "@/components/Faq";
 import { Footer } from "@/components/Footer";
-import { Gallery } from "@/components/Gallery";
-import { Hero } from "@/components/Hero";
 import { JsonLd } from "@/components/JsonLd";
 import { Location } from "@/components/Location";
 import { Marquee } from "@/components/Marquee";
 import { MotionProvider } from "@/components/Motion";
 import { Nav } from "@/components/Nav";
-import { Story } from "@/components/Story";
-import { laAbi } from "@/lib/site";
+import { Gallery1 } from "@/components/abi1/Gallery1";
+import { Hero1 } from "@/components/abi1/Hero1";
+import { Story1 } from "@/components/abi1/Story1";
+import { laAbi1 } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: { absolute: laAbi.seo.title },
-  description: laAbi.seo.description,
-  alternates: { canonical: "/" },
+  title: { absolute: laAbi1.seo.title },
+  description: laAbi1.seo.description,
+  alternates: { canonical: "/la-abi-1" },
   openGraph: {
-    title: laAbi.seo.title,
-    description: laAbi.seo.description,
-    url: "/",
+    title: laAbi1.seo.title,
+    description: laAbi1.seo.description,
+    url: "/la-abi-1",
   },
 };
 
-export default function Home() {
-  const apt = laAbi;
+export default function LaAbi1() {
+  const apt = laAbi1;
 
   return (
-    <MotionProvider variant="slat">
+    <MotionProvider variant="veil">
       <Cursor />
       <Nav apt={apt} />
       <main>
-        <Hero apt={apt} />
-        <Story apt={apt} />
-        <Marquee apt={apt} />
-        <Gallery apt={apt} />
+        <Hero1 apt={apt} />
+        <Story1 apt={apt} />
+        <Marquee apt={apt} reverse />
+        <Gallery1 apt={apt} />
         <Amenities apt={apt} />
         <Location apt={apt} />
         <Booking apt={apt} />

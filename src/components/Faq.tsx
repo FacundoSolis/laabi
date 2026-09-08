@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { faqs } from "@/lib/site";
+import type { Apartment } from "@/lib/site";
 import { Reveal } from "./Reveal";
 
-export function Faq() {
+export function Faq({ apt }: { apt: Apartment }) {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
@@ -26,7 +26,7 @@ export function Faq() {
           </div>
 
           <div className="lg:col-span-7 lg:col-start-6">
-            {faqs.map((f, i) => {
+            {apt.faqs.map((f, i) => {
               const isOpen = open === i;
               return (
                 <Reveal key={f.q} delay={i * 60}>

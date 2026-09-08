@@ -303,3 +303,111 @@ input[type="date"]::-webkit-calendar-picker-indicator { opacity: .45; cursor: po
 @media (prefers-reduced-motion: reduce) {
   [style*="animation"] { opacity: 1 !important; transform: none !important; }
 }
+
+/* ============================================================
+   LA ABI 1 · variante de movimiento "veil"
+   Misma paleta, misma tipografía, misma retícula.
+   Lo que cambia es cómo aparecen las cosas: en vez de subir y
+   descubrirse en lamas verticales, se abren como un telón y
+   barren en bandas horizontales.
+   ============================================================ */
+
+@layer components {
+
+/* ---------- Revelado al hacer scroll ---------- */
+
+/* El contenedor observado se queda sin ocultar: si lo recortáramos a él,
+   el IntersectionObserver lo vería con área cero y nunca lo revelaría. */
+[data-reveal][data-motion="veil"] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+[data-reveal][data-motion="veil"] .veil-inner {
+  display: block;
+  opacity: 0;
+  clip-path: inset(0 -6% 100% -6%);
+  filter: blur(7px);
+  transition:
+    opacity .85s var(--ease-out-expo),
+    clip-path 1.25s var(--ease-out-expo),
+    filter 1.05s var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal][data-motion="veil"].is-in .veil-inner {
+  opacity: 1;
+  clip-path: inset(-6% -6% -6% -6%);
+  filter: blur(0px);
+}
+
+/* ---------- Imágenes: bandas horizontales ---------- */
+
+.slat-reveal[data-motion="veil"] .slat-bar {
+  bottom: auto;
+  left: 0;
+  right: 0;
+  width: auto;
+  transform-origin: right;
+  transform: scaleX(1);
+  transition: transform 1.05s var(--ease-out-expo);
+}
+
+.slat-reveal[data-motion="veil"].is-in .slat-bar { transform: scaleX(0); }
+
+/* La foto se asienta desde una escala algo mayor */
+.slat-reveal[data-motion="veil"] img { transform: scale(1.08); }
+.slat-reveal[data-motion="veil"].is-in img { transform: scale(1); }
+.slat-reveal[data-motion="veil"].media-zoom:hover img { transform: scale(1.05); }
+
+/* ---------- Detalles propios de La Abi 1 ---------- */
+
+.marquee-reverse { animation-direction: reverse; }
+
+.vertical-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Retícula de hilos finos, eco de las lamas pero en horizontal */
+.threads {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--color-oak) 55%, transparent) 0 1px,
+    transparent 1px 9px
+  );
+}
+
+.frame-oak {
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-ink) 12%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal][data-motion="veil"] .veil-inner,
+  [data-reveal][data-motion="veil"].is-in .veil-inner {
+    opacity: 1;
+    clip-path: none;
+    filter: none;
+  }
+  .slat-reveal[data-motion="veil"] img { transform: none; }
+}
+
+}
+
+/* ---------- Animaciones de entrada de La Abi 1 ---------- */
+
+@keyframes curtainUp {
+  from { opacity: 0; clip-path: inset(100% 0 -20% 0); transform: translateY(14%); }
+  to   { opacity: 1; clip-path: inset(-20% 0 -20% 0); transform: none; }
+}
+
+@keyframes driftIn {
+  from { opacity: 0; transform: translateX(-20px); filter: blur(7px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
+@keyframes unveil {
+  from { opacity: 0; clip-path: inset(0 100% 0 0); }
+  to   { opacity: 1; clip-path: inset(0 -4% 0 0); }
+}

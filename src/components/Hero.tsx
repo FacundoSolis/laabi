@@ -2,11 +2,12 @@
 
 import { useEffect, useRef } from "react";
 import { SlatImage } from "./SlatImage";
-import { site } from "@/lib/site";
+import type { Apartment } from "@/lib/site";
 
-export function Hero() {
+export function Hero({ apt }: { apt: Apartment }) {
   const imgWrap = useRef<HTMLDivElement>(null);
-  const words = "Una casa con alma en el centro de Salamanca".split(" ");
+  const words = apt.headline;
+  const photo = apt.photos[0];
 
   useEffect(() => {
     const el = imgWrap.current;
@@ -53,7 +54,7 @@ export function Hero() {
             style={{ animation: "fadeUp .9s cubic-bezier(.16,1,.3,1) .15s forwards" }}
           >
             <span className="inline-block h-px w-10 bg-oak-deep" />
-            {site.tagline}
+            {apt.tagline}
           </p>
 
           <h1 className="display text-[clamp(2.9rem,8.4vw,7rem)] leading-[1.02]">
@@ -70,7 +71,7 @@ export function Hero() {
                     }s forwards`,
                   }}
                 >
-                  {w === "alma" ? <em className="text-oak-deep">{w}</em> : w}
+                  {w === apt.emphasis ? <em className="text-oak-deep">{w}</em> : w}
                   &nbsp;
                 </span>
               </span>
@@ -81,9 +82,7 @@ export function Hero() {
             className="mt-10 max-w-xl text-[1.02rem] leading-relaxed text-ink-soft opacity-0"
             style={{ animation: "fadeUp 1s cubic-bezier(.16,1,.3,1) .8s forwards" }}
           >
-            Un apartamento reformado para cuatro personas a cinco minutos de la
-            Plaza Mayor. Roble, luz cálida y silencio: el sitio al que apetece
-            volver después de andar la ciudad.
+            {apt.intro}
           </p>
 
           <div
@@ -103,17 +102,17 @@ export function Hero() {
         <div className="lg:col-span-5">
           <div ref={imgWrap} className="relative will-change-transform">
             <SlatImage
-              src="/img/dormitorio.jpg"
-              alt="Dormitorio principal de La Abi con cabecero de lamas de roble"
+              src={photo.src}
+              alt={photo.alt}
               priority
               zoom={false}
               sizes="(max-width: 1024px) 100vw, 42vw"
               className="aspect-[4/5] w-full lg:aspect-[3/4]"
             />
-            {/* Tarjeta de precio */}
+            {/* Tarjeta de precio — ⚠️ PENDIENTE: tarifa provisional */}
             <div className="absolute -bottom-6 left-4 flex items-baseline gap-2 bg-bone px-6 py-5 shadow-[0_18px_50px_-24px_rgba(36,28,22,0.45)] md:-left-8">
               <span className="eyebrow text-ink-soft">Desde</span>
-              <span className="display text-[2.1rem]">{site.pricing.base}€</span>
+              <span className="display text-[2.1rem]">{apt.pricing.base}€</span>
               <span className="text-[0.78rem] text-ink-soft">/ noche</span>
             </div>
           </div>
@@ -124,7 +123,7 @@ export function Hero() {
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="rule mt-10" />
         <div className="grid grid-cols-2 md:grid-cols-4">
-          {site.facts.map((f, i) => (
+          {apt.facts.map((f, i) => (
             <div
               key={f.label}
               className={`flex items-baseline gap-3 py-7 ${

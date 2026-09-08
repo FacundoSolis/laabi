@@ -1,8 +1,10 @@
-import { nearby, site } from "@/lib/site";
+import { mapLink, mapSrc, nearby, site, type Apartment } from "@/lib/site";
 import { Reveal } from "./Reveal";
 import { SlatImage } from "./SlatImage";
 
-export function Location() {
+export function Location({ apt }: { apt: Apartment }) {
+  const photo = apt.photos[apt.slug === "la-abi" ? 4 : 0];
+
   return (
     <section id="ubicacion" className="bg-bone-2 py-24 md:py-32">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
@@ -46,10 +48,10 @@ export function Location() {
 
             <Reveal delay={260}>
               <p className="mt-8 text-[0.85rem] leading-relaxed text-ink-soft">
-                {site.address}
+                {site.addressFull}
                 <br />
                 <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${site.map.lat},${site.map.lng}`}
+                  href={mapLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="link-line mt-2 inline-block text-ink"
@@ -58,14 +60,22 @@ export function Location() {
                 </a>
               </p>
             </Reveal>
+
+            <Reveal delay={320}>
+              <p className="mt-6 text-[0.85rem] leading-relaxed text-ink-soft">
+                El apartamento está en <strong className="font-medium text-ink">planta baja</strong>,
+                así que no hay escaleras que subir. No tiene plaza de garaje
+                propia: se aparca en la calle.
+              </p>
+            </Reveal>
           </div>
 
           <div className="lg:col-span-6 lg:col-start-7">
             <Reveal>
               <div className="media aspect-[4/3] w-full border border-ink/10">
                 <iframe
-                  title="Mapa de la ubicación del apartamento en Salamanca"
-                  src={`https://maps.google.com/maps?q=${site.map.lat},${site.map.lng}&z=16&hl=es&output=embed`}
+                  title={`Mapa de la ubicación de ${apt.name} en Salamanca`}
+                  src={mapSrc}
                   className="h-full w-full grayscale-[0.28] contrast-[0.97]"
                   loading="lazy"
                 />
@@ -73,8 +83,8 @@ export function Location() {
             </Reveal>
             <div className="mt-6">
               <SlatImage
-                src="/img/estancia.jpg"
-                alt="Salón comedor del apartamento con mesa redonda de madera"
+                src={photo.src}
+                alt={photo.alt}
                 className="aspect-[16/10] w-full"
                 sizes="(max-width: 1024px) 100vw, 46vw"
               />

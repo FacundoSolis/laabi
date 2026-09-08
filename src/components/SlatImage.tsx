@@ -2,10 +2,16 @@
 
 import Image from "next/image";
 import { useReveal } from "./Reveal";
+import { useMotionVariant } from "./Motion";
 
 /* ------------------------------------------------------------
-   Imagen que se descubre en franjas verticales, como las lamas
-   de madera del cabecero del apartamento.
+   Imagen que se descubre sola al entrar en pantalla.
+
+   · La Abi   ("slat") — franjas verticales, como las lamas de
+     madera del cabecero, que caen de arriba abajo.
+   · La Abi 1 ("veil") — bandas horizontales que barren de
+     izquierda a derecha mientras la foto se asienta desde una
+     escala ligeramente mayor.
    ------------------------------------------------------------ */
 
 const BARS = 7;
@@ -26,10 +32,13 @@ export function SlatImage({
   zoom?: boolean;
 }) {
   const ref = useReveal<HTMLDivElement>();
+  const variant = useMotionVariant();
+  const veil = variant === "veil";
 
   return (
     <div
       ref={ref}
+      data-motion={variant}
       className={`slat-reveal media ${zoom ? "media-zoom" : ""} ${className}`}
     >
       <Image
@@ -44,11 +53,19 @@ export function SlatImage({
         <span
           key={i}
           className="slat-bar"
-          style={{
-            left: `${(i * 100) / BARS}%`,
-            width: `calc(${100 / BARS}% + 1px)`,
-            transitionDelay: `${i * 85}ms`,
-          }}
+          style={
+            veil
+              ? {
+                  top: `${(i * 100) / BARS}%`,
+                  height: `calc(${100 / BARS}% + 1px)`,
+                  transitionDelay: `${i * 70}ms`,
+                }
+              : {
+                  left: `${(i * 100) / BARS}%`,
+                  width: `calc(${100 / BARS}% + 1px)`,
+                  transitionDelay: `${i * 85}ms`,
+                }
+          }
         />
       ))}
     </div>

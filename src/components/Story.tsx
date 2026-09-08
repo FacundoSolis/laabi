@@ -1,8 +1,11 @@
 import { Reveal } from "./Reveal";
 import { SlatImage } from "./SlatImage";
 import { LogoMark } from "./Logo";
+import type { Apartment } from "@/lib/site";
 
-export function Story() {
+export function Story({ apt }: { apt: Apartment }) {
+  const [a, b] = [apt.photos[1], apt.photos[2]];
+
   return (
     <section id="apartamento" className="relative py-24 md:py-36">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
@@ -17,24 +20,17 @@ export function Story() {
 
             <Reveal delay={80}>
               <h2 className="display text-[clamp(2.2rem,4.6vw,3.9rem)]">
-                Se llama <em className="text-oak-deep">La Abi</em> por ella
+                {apt.storyTitle.before}{" "}
+                <em className="text-oak-deep">{apt.storyTitle.em}</em>{" "}
+                {apt.storyTitle.after}
               </h2>
             </Reveal>
 
             <Reveal delay={160}>
               <div className="mt-8 space-y-5 text-[1rem] leading-relaxed text-ink-soft">
-                <p>
-                  La abuela recibía siempre igual: la casa recogida, la luz
-                  encendida y algo caliente esperando en la cocina. Este
-                  apartamento es esa idea, reformado de arriba abajo y puesto al
-                  día.
-                </p>
-                <p>
-                  Roble natural, blanco roto y latón. Nada sobra y nada falta:
-                  una cama que descansa de verdad, una cocina en la que se puede
-                  cocinar y un baño que apetece. Todo en una calle tranquila del
-                  casco antiguo, a cinco minutos andando de la Plaza Mayor.
-                </p>
+                {apt.story.map((p) => (
+                  <p key={p}>{p}</p>
+                ))}
               </div>
             </Reveal>
 
@@ -42,9 +38,12 @@ export function Story() {
               <div className="mt-11 flex items-center gap-5 border-t border-ink/10 pt-8">
                 <LogoMark className="h-12 w-12 text-oak-deep" strokeWidth={2.2} />
                 <p className="serif text-[1.05rem] italic leading-snug text-ink">
-                  «Que estéis como en casa.
-                  <br />
-                  Lo demás ya lo ponemos nosotros.»
+                  {apt.quote.map((line, i) => (
+                    <span key={line}>
+                      {line}
+                      {i < apt.quote.length - 1 && <br />}
+                    </span>
+                  ))}
                 </p>
               </div>
             </Reveal>
@@ -54,14 +53,14 @@ export function Story() {
           <div className="lg:col-span-6 lg:col-start-7">
             <div className="grid grid-cols-2 gap-4 md:gap-6">
               <SlatImage
-                src="/img/comedor.jpg"
-                alt="Comedor con mesa de madera y panel de lamas"
+                src={a.src}
+                alt={a.alt}
                 className="aspect-[3/4] w-full"
                 sizes="(max-width: 1024px) 45vw, 25vw"
               />
               <SlatImage
-                src="/img/cocina.jpg"
-                alt="Cocina abierta en blanco y roble"
+                src={b.src}
+                alt={b.alt}
                 className="mt-12 aspect-[3/4] w-full md:mt-20"
                 sizes="(max-width: 1024px) 45vw, 25vw"
               />
