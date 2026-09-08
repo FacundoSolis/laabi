@@ -1,32 +1,19 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { site, type Apartment } from "@/lib/site";
 
 /* ------------------------------------------------------------
    Botón flotante de WhatsApp, abajo a la derecha.
 
-   Va en tinta y no en el verde de WhatsApp: la forma del icono ya
-   se reconoce sola y así no rompe la paleta. Si alguna vez se
-   prefiere el verde de siempre, basta cambiar las dos clases de
-   color de abajo.
+   Está desde el primer momento, sin esperar a que se baje. Como no
+   necesita nada del navegador, se renderiza en el servidor y sale ya
+   en el HTML: se ve incluso antes de que la página termine de
+   hidratar.
 
-   z-index 35 a propósito: por encima del contenido, pero por
-   debajo del menú móvil (40), de la cabecera (50) y del visor de
-   fotos (80), para que ninguno de los tres se lo encuentre encima.
+   z-index 35 a propósito: por encima del contenido, pero por debajo
+   del menú móvil (40), de la cabecera (50) y del visor de fotos (80),
+   para que ninguno de los tres se lo encuentre encima.
    ------------------------------------------------------------ */
 
 export function WhatsAppFab({ apt }: { apt: Apartment }) {
-  const [shown, setShown] = useState(false);
-
-  useEffect(() => {
-    // No asoma sobre la portada: aparece cuando ya se está mirando.
-    const onScroll = () => setShown(window.scrollY > 480);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   const mensaje = `Hola, os escribo desde la web. Me interesa ${apt.name} y quería preguntar por la disponibilidad.`;
   const href = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(mensaje)}`;
 
@@ -36,10 +23,9 @@ export function WhatsAppFab({ apt }: { apt: Apartment }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Escribir por WhatsApp sobre ${apt.name}`}
-      data-shown={shown ? "1" : undefined}
-      className="wa-fab group fixed bottom-6 right-6 z-[35] flex items-center gap-0 overflow-hidden rounded-full bg-ink py-4 pl-4 pr-4 text-bone shadow-[0_14px_40px_-12px_rgba(36,28,22,0.55)] transition-[background-color,gap,padding] duration-500 hover:bg-oak-deep md:bottom-8 md:right-8 md:hover:gap-3 md:hover:pr-7"
+      className="wa-fab group fixed bottom-6 right-6 z-[35] flex items-center gap-0 overflow-hidden rounded-full bg-whatsapp py-4 pl-4 pr-4 text-white shadow-[0_14px_40px_-12px_rgba(18,64,38,0.6)] transition-[background-color,gap,padding] duration-500 hover:bg-whatsapp-deep md:bottom-8 md:right-8 md:hover:gap-3 md:hover:pr-7"
     >
-      <WhatsAppGlyph className="h-6 w-6 shrink-0" />
+      <WhatsAppGlyph className="h-7 w-7 shrink-0" />
       {/* La etiqueta solo se despliega en escritorio, al pasar por encima */}
       <span className="hidden max-w-0 whitespace-nowrap text-[0.78rem] font-medium tracking-[0.08em] uppercase transition-[max-width] duration-500 group-hover:max-w-[16rem] md:block">
         Escríbenos

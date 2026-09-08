@@ -18,6 +18,10 @@
   --color-ink-soft:  #5A4B3F;
   --color-noir:      #12100E;
 
+  /* Verde oficial de WhatsApp, solo para el botón flotante. */
+  --color-whatsapp:      #25D366;
+  --color-whatsapp-deep: #1DA851;
+
   --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
@@ -383,32 +387,19 @@ input[type="date"]::-webkit-calendar-picker-indicator { opacity: .45; cursor: po
    con el hueso de siempre se verían como un parche más claro. */
 .on-sand .slat-reveal .slat-bar { background: var(--color-sand); }
 
-/* Botón flotante de WhatsApp: entra cuando se ha bajado un poco. */
+/* Botón flotante de WhatsApp: está desde el principio, sin esperar a
+   que se baje. Solo se asienta con un fundido corto al cargar. */
 .wa-fab {
-  opacity: 0;
-  transform: translateY(18px) scale(.92);
-  pointer-events: none;
-  transition:
-    opacity .5s var(--ease-out-expo),
-    transform .55s var(--ease-out-expo),
-    background-color .5s var(--ease-out-expo),
-    gap .5s var(--ease-out-expo),
-    padding .5s var(--ease-out-expo);
-}
-
-.wa-fab[data-shown] {
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
+  animation: fabIn .6s var(--ease-out-expo) .25s both;
 }
 
 .wa-fab:focus-visible {
-  outline: 2px solid var(--color-oak);
+  outline: 2px solid var(--color-whatsapp-deep);
   outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wa-fab { transform: none; }
+  .wa-fab { animation: none; }
 }
 
 .frame-oak {
@@ -442,4 +433,9 @@ input[type="date"]::-webkit-calendar-picker-indicator { opacity: .45; cursor: po
 @keyframes unveil {
   from { opacity: 0; clip-path: inset(0 100% 0 0); }
   to   { opacity: 1; clip-path: inset(0 -4% 0 0); }
+}
+
+@keyframes fabIn {
+  from { opacity: 0; transform: translateY(14px) scale(.94); }
+  to   { opacity: 1; transform: none; }
 }
