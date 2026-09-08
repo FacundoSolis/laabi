@@ -9,6 +9,7 @@ import { Location } from "@/components/Location";
 import { Marquee } from "@/components/Marquee";
 import { MotionProvider } from "@/components/Motion";
 import { Nav } from "@/components/Nav";
+import { WhatsAppFab } from "@/components/WhatsAppFab";
 import { OtherApartment } from "@/components/OtherApartment";
 import { Gallery1 } from "@/components/abi1/Gallery1";
 import { Hero1 } from "@/components/abi1/Hero1";
@@ -45,6 +46,7 @@ export default function LaAbi1() {
         <Faq apt={apt} />
       </main>
       <Footer apt={apt} />
+      <WhatsAppFab apt={apt} />
       <JsonLd apt={apt} />
     </MotionProvider>
   );

@@ -383,6 +383,34 @@ input[type="date"]::-webkit-calendar-picker-indicator { opacity: .45; cursor: po
    con el hueso de siempre se verían como un parche más claro. */
 .on-sand .slat-reveal .slat-bar { background: var(--color-sand); }
 
+/* Botón flotante de WhatsApp: entra cuando se ha bajado un poco. */
+.wa-fab {
+  opacity: 0;
+  transform: translateY(18px) scale(.92);
+  pointer-events: none;
+  transition:
+    opacity .5s var(--ease-out-expo),
+    transform .55s var(--ease-out-expo),
+    background-color .5s var(--ease-out-expo),
+    gap .5s var(--ease-out-expo),
+    padding .5s var(--ease-out-expo);
+}
+
+.wa-fab[data-shown] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.wa-fab:focus-visible {
+  outline: 2px solid var(--color-oak);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-fab { transform: none; }
+}
+
 .frame-oak {
   box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-ink) 12%, transparent);
 }

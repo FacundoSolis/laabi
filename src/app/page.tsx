@@ -11,6 +11,7 @@ import { Location } from "@/components/Location";
 import { Marquee } from "@/components/Marquee";
 import { MotionProvider } from "@/components/Motion";
 import { Nav } from "@/components/Nav";
+import { WhatsAppFab } from "@/components/WhatsAppFab";
 import { OtherApartment } from "@/components/OtherApartment";
 import { Story } from "@/components/Story";
 import { laAbi } from "@/lib/site";
@@ -45,6 +46,7 @@ export default function Home() {
         <Faq apt={apt} />
       </main>
       <Footer apt={apt} />
+      <WhatsAppFab apt={apt} />
       <JsonLd apt={apt} />
     </MotionProvider>
   );
