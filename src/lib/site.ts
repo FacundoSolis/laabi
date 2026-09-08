@@ -81,6 +81,8 @@ export type Apartment = {
   storyTitle: { before: string; em: string; after: string };
   story: string[];
   quote: string[];
+  /** Cómo se presenta este apartamento cuando lo anuncia el otro. */
+  pitch: { hook: string; text: string };
   facts: { value: string; label: string }[];
   marquee: string[];
   photos: Photo[];
@@ -242,6 +244,10 @@ export const laAbi: Apartment = {
     "Roble natural, blanco roto y latón. Nada sobra y nada falta: una cama que descansa de verdad, una cocina en la que se puede cocinar y un baño que apetece. Todo en una calle tranquila del casco antiguo.",
   ],
   quote: ["«Que estéis como en casa.", "Lo demás ya lo ponemos nosotros.»"],
+  pitch: {
+    hook: "¿Sois cuatro?",
+    text: "La Abi tiene el dormitorio aparte, baño completo y sitio de sobra para cuatro. Mismo portal, misma planta baja.",
+  },
   facts: [
     { value: "4", label: "Huéspedes" },   // ✅ CONFIRMADO
     { value: "1", label: "Dormitorio" },  // ✅ CONFIRMADO
@@ -332,6 +338,10 @@ export const laAbi1: Apartment = {
     "Aquí no hay pasillos ni puertas que sobren. Un solo espacio en el que la cocina, la mesa y la cama conviven sin estorbarse, y un baño completo al lado. Para dos que van sobrados o tres que van cómodos.",
   ],
   quote: ["«Pequeño de metros,", "grande de todo lo demás.»"],
+  pitch: {
+    hook: "¿Venís tres o dos?",
+    text: "La Abi 1 es un estudio diáfano, más recogido y más barato, con la misma cocina y el mismo baño completo. Puerta con puerta.",
+  },
   facts: [
     { value: "3", label: "Huéspedes" },   // ✅ CONFIRMADO
     { value: "Estudio", label: "Diáfano" }, // ✅ CONFIRMADO — «Ninguno» dormitorio

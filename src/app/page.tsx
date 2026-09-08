@@ -11,6 +11,7 @@ import { Location } from "@/components/Location";
 import { Marquee } from "@/components/Marquee";
 import { MotionProvider } from "@/components/Motion";
 import { Nav } from "@/components/Nav";
+import { OtherApartment } from "@/components/OtherApartment";
 import { Story } from "@/components/Story";
 import { laAbi } from "@/lib/site";
 
@@ -38,6 +39,7 @@ export default function Home() {
         <Marquee apt={apt} />
         <Gallery apt={apt} />
         <Amenities apt={apt} />
+        <OtherApartment apt={apt} />
         <Location apt={apt} />
         <Booking apt={apt} />
         <Faq apt={apt} />

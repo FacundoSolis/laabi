@@ -379,6 +379,10 @@ input[type="date"]::-webkit-calendar-picker-indicator { opacity: .45; cursor: po
   );
 }
 
+/* En la franja de arena, las lamas del revelado tienen que ser de arena:
+   con el hueso de siempre se verían como un parche más claro. */
+.on-sand .slat-reveal .slat-bar { background: var(--color-sand); }
+
 .frame-oak {
   box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-ink) 12%, transparent);
 }

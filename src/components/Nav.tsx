@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { ApartmentLink } from "./ApartmentLink";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 import { otherApartment, type Apartment } from "@/lib/site";
@@ -63,7 +63,7 @@ export function Nav({ apt }: { apt: Apartment }) {
 
             {/* Salto al otro apartamento */}
             <span aria-hidden className="h-4 w-px bg-ink/15" />
-            <Link
+            <ApartmentLink
               href={other.path}
               className="group flex items-center gap-2 text-[0.8rem] tracking-[0.06em] text-oak-deep transition-colors hover:text-ink"
             >
@@ -74,7 +74,7 @@ export function Nav({ apt }: { apt: Apartment }) {
               >
                 →
               </span>
-            </Link>
+            </ApartmentLink>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -138,14 +138,14 @@ export function Nav({ apt }: { apt: Apartment }) {
             }}
           >
             <p className="eyebrow mb-4 text-ink-soft">El otro apartamento</p>
-            <Link
+            <ApartmentLink
               href={other.path}
-              onClick={() => setOpen(false)}
+              onNavigate={() => setOpen(false)}
               className="serif flex items-baseline gap-3 text-[1.6rem] text-oak-deep"
             >
               {other.name}
               <span aria-hidden>→</span>
-            </Link>
+            </ApartmentLink>
             <p className="mt-2 text-[0.85rem] text-ink-soft">{other.tagline}</p>
           </div>
         </div>

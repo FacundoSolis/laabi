@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { ApartmentLink } from "./ApartmentLink";
 import { otherApartment, site, type Apartment } from "@/lib/site";
 import { Logo } from "./Logo";
 
@@ -17,7 +17,7 @@ export function Footer({ apt }: { apt: Apartment }) {
             </p>
 
             {/* Salto al otro apartamento */}
-            <Link
+            <ApartmentLink
               href={other.path}
               className="group mt-9 inline-flex flex-col gap-1 border-t border-bone/15 pt-6"
             >
@@ -32,7 +32,7 @@ export function Footer({ apt }: { apt: Apartment }) {
                 </span>
               </span>
               <span className="text-[0.82rem] text-bone/55">{other.tagline}</span>
-            </Link>
+            </ApartmentLink>
           </div>
 
           <div className="md:col-span-3 md:col-start-7">

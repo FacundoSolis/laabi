@@ -9,6 +9,7 @@ import { Location } from "@/components/Location";
 import { Marquee } from "@/components/Marquee";
 import { MotionProvider } from "@/components/Motion";
 import { Nav } from "@/components/Nav";
+import { OtherApartment } from "@/components/OtherApartment";
 import { Gallery1 } from "@/components/abi1/Gallery1";
 import { Hero1 } from "@/components/abi1/Hero1";
 import { Story1 } from "@/components/abi1/Story1";
@@ -38,6 +39,7 @@ export default function LaAbi1() {
         <Marquee apt={apt} reverse />
         <Gallery1 apt={apt} />
         <Amenities apt={apt} />
+        <OtherApartment apt={apt} mirrored />
         <Location apt={apt} />
         <Booking apt={apt} />
         <Faq apt={apt} />
